@@ -25,9 +25,45 @@
       依赖中间件middleware,插件
       全局守卫：nuxt.config.js指向middleware
               在layout.vue中定义中间件
+              插件前置
       组件独享守卫：
               页面用middleware:'auth',或者middleware(){}
-      插件前置全局守卫
     后置：
-      依赖vue的beforeRouterLeave钩子
-      插件后置全局守卫
+      全局守卫：插件后置
+      页面独享：页面中依赖vue的beforeRouterLeave钩子
+      
+  数据交互:
+    安装:
+      @nuxtjs/axios  @nuxtjs/proxy
+    nuxt.config.js配置
+      modules: [@nuxtjs/axios]
+  跨域配置:
+    axios: {
+      proxy: true,
+      preFix: '/api'
+    },
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    }
+  请求拦截：插件配置
+    plugins: [
+      {
+        src: '~/plugins/axios',
+        ssr: true
+      }
+    ]
+  自定义loading页面：
+    loading: {
+      color: 'red',
+      height: '3px'
+    }
+    loading: '~/components/loading.vue'
+  状态持久化：
+    安装：cookie-universal-nuxt(this.$cookies)
+    思路：登录时，同步数据到vuex & cookie, 强制刷新后，在nuxtServerInit钩子中，取出cookies,同步到vuex,axios拦截器中读取vuex中的token,添加到请求header中。
