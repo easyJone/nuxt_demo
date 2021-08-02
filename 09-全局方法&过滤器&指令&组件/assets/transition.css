@@ -1,0 +1,22 @@
+/* 动画形式 */
+.page-enter-active,
+.page-leave-active {
+  transition: opacity .1s;
+}
+
+/* 入 退 */
+.page-enter,
+.page-leave-to {
+  opacity: 0
+}
+
+/* _id.vue页面单独设置动效 */
+.test-enter-active,
+.test-leave-active {
+  transition: 0.2s ease all;
+}
+
+.test-enter,
+.test-leave-to {
+  margin-left: -1000px;
+}
